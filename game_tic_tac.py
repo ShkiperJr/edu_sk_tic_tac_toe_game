@@ -1,6 +1,7 @@
 game_matrix = [["-" for j in range(3)] for i in range(3)]
 
 
+
 def game_matrix_print(matrix):
     """A beautifully designed graphic display of the game matrix
 
@@ -13,46 +14,69 @@ def game_matrix_print(matrix):
         for j in range(3):
             print("  ",matrix[i][j], end='')
         print()
+    print()
         
         
-def check_input(input_x):
+def check_input(player, coordinates):
+    """Input validation. The function returns only the specified 
+       required values.
+
+    Args:
+        player (_type_): Player index.
+        coordinates (_type_): The coordinate axis.
+
+    Returns:
+        Str : The function returns only the specified required 
+              values, necessary for gameplay.
+    """
     list_of_char = ("1", "2", "3", "q", "Q")
-    if input_x =="0":
-        return False
-    if input_x not in list_of_char:
-        print('Ошибка ввода!!! Введите 1, 2, 3.')
-        return False
-    return True
+    x=''
+    while x not in list_of_char:
+        x = input(f'Player {player} inter number  {coordinates}: ')
+        if x in list_of_char:
+            return x
+        else:
+            print('Ошибка ввода!!! Введите 1, 2, 3.')     
 
     
 
-def сhecking_game_end(x,y,player):
-    if game_matrix[x][y] != '-':
-        print('Указанные кординаты ужe заняты!!!')
-        return True
-    
+def сhecking_game_end():
+    if "-" not in game_matrix[1]:
+        print('There is no Winner. DRAW')
+        return False 
     return True
+
+        
+  
 
 
 def run_game():
     print("Game has begun")    
-    print("Player 1 Ready")
-    xx = "0"
-    while not check_input(xx): 
-        xx = input('Player 1 inter number  X: ')
-        if xx == 'q':
-            return
+    player_index = 1
     
-    yy = input('Player 1 inter number  Y: ')
-    if yy == 'q':
-        return
-
-
-
-
-game_matrix_print(game_matrix) 
+    while сhecking_game_end():
+        
+        game_matrix_print(game_matrix)
+    
+        print(f"Player {player_index} Ready")
+#Entering coordinates, checking for an emergency exit.
+        x = check_input(player_index, "X")
+        if x == 'Q' or x == 'q':
+            return
+        y = check_input(player_index, "Y")
+        if y == 'Q' or y == 'q':
+            return
+#Checking the cell occupancy. Switching to re-entry
+        if game_matrix[int(x) - 1][int(y) - 1] != '-':
+            print('Указанные кординаты ужe заняты!!!')
+            continue
+#Player change. Entering the player's actions into the game matrix.        
+        if player_index == 1:
+            game_matrix[int(x) - 1][int(y) - 1] = "x"
+            player_index = 2
+        else:
+            player_index = 1
+            game_matrix[int(x) - 1][int(y) - 1] = "o"
+    
 
 run_game()   
-
-
-#print(game_matrix)
