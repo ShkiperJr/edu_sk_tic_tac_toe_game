@@ -7,9 +7,9 @@ def game_matrix_print(matrix):
     Args:
         matrix (game_matrix Previously initiated): Task to display on the screen
     """
-    print("      y1  y2  y3")
+    print("     y1  y2  y3")
     for i in range(3):
-        print("x", i + 1, end='')
+        print("x" + str(i + 1), end='')
         for j in range(3):
             print("  ",matrix[i][j], end='')
         print()
@@ -21,8 +21,8 @@ def check_input(player, coordinates):
        required values.
 
     Args:
-        player (_type_): Player index.
-        coordinates (_type_): The coordinate axis.
+        player (int): Player index.
+        coordinates (char): The coordinate axis.
 
     Returns:
         Str : The function returns only the specified required 
@@ -31,11 +31,11 @@ def check_input(player, coordinates):
     list_of_char = ("1", "2", "3", "q", "Q")
     x=''
     while x not in list_of_char:
-        x = input(f'Player {player} inter number  {coordinates}: ')
+        x = input(f'Player {player} enter number  {coordinates}: ')
         if x in list_of_char:
             return x
         else:
-            print('Ошибка ввода!!! Введите 1, 2, 3.')     
+            print('Input error!!! Enter 1, 2, 3.')     
 
     
 def сhecking_game_end():
@@ -51,7 +51,7 @@ def сhecking_game_end():
             a1 (int): Win line coordinate
             b1 (int): Win line coordinate
             a2 (int): Win line coordinate
-            b2 (int): Win line coordinate
+            b2 (int): Win line coordinateы
             a3 (int): Win line coordinate
             b3 (int): Win line coordinate
             index (char): Player symbol
@@ -59,9 +59,11 @@ def сhecking_game_end():
         game_matrix[a1][b1] = index
         game_matrix[a2][b2] = index
         game_matrix[a3][b3] = index
+        
 # Checks for the game matrix being filled     
     if not any ('-' in i for i in game_matrix):
         print('There is no Winner. DRAW')
+        game_matrix_print(game_matrix)
         return False
 #1 Checks for 16 victory options.   
     if game_matrix[0][0] == game_matrix[0][1] == game_matrix[0][2] == 'x':
@@ -156,6 +158,15 @@ def сhecking_game_end():
       
 
 def run_game():
+    """A function with the basic logic of the game data input, 
+       data processing, data output
+    """
+    print("""Welcome to the Tic-Tac-Toe game. 
+Enter the coordinates of the field one at a time 
+and find out who is the best.
+
+For an emergency exit, enter "q".
+""")
     print("Game has begun")    
     player_index = 1
     
@@ -163,7 +174,7 @@ def run_game():
         
         game_matrix_print(game_matrix)
     
-        print(f"Player {player_index} Ready")
+        print(f"Player {player_index}. Ready!")
 #Entering coordinates, checking for an emergency exit.
         x = check_input(player_index, "X")
         if x == 'Q' or x == 'q':
@@ -173,7 +184,7 @@ def run_game():
             return
 #Checking the cell occupancy. Switching to re-entry
         if game_matrix[int(x) - 1][int(y) - 1] != '-':
-            print('Указанные кординаты ужe заняты!!!')
+            print('The specified cell is already occupied. Repeat the input!')
             continue
 #Player change. Entering the player's actions into the game matrix.        
         if player_index == 1:
