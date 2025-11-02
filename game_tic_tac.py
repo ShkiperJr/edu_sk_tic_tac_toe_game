@@ -59,7 +59,7 @@ def сhecking_game_end():
         game_matrix[a1][b1] = index
         game_matrix[a2][b2] = index
         game_matrix[a3][b3] = index
-# Checks the logic of the game's ending.        
+# Checks for the game matrix being filled     
     if not any ('-' in i for i in game_matrix):
         print('There is no Winner. DRAW')
         return False
